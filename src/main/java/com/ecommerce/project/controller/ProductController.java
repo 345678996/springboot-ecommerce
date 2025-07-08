@@ -3,6 +3,7 @@ package com.ecommerce.project.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,5 +52,11 @@ public class ProductController {
         ProductDTO updatedProductDTO = productService.updateProduct(product, productId);                                                
 
         return new ResponseEntity<>(updatedProductDTO, HttpStatus.OK);                                            
+    }
+
+    @DeleteMapping("/api/product/{productId}")
+    public ResponseEntity<ProductDTO> deleteProduct(@PathVariable Long productId) {
+        ProductDTO deletedProductDTO = productService.deleteProduct(productId);
+        return new ResponseEntity<>(deletedProductDTO, HttpStatus.OK);
     }
 }
