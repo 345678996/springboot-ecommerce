@@ -1,6 +1,7 @@
 package com.ecommerce.project.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +94,23 @@ public class ProductServiceImpl implements ProductService {
         productResponse.setContent(productDTOs);
 
         return productResponse;
+    }
+
+    @Override
+    public ProductDTO updateProduct(Product product, Long productId) {
+       Product existingProduct = productRepository.findById(productId)
+                        .orElseThrow(() -> 
+                        new ResourceNotFoundException("Product", "productId", productId));
+        
+        existingProduct.setProductName(product.getProductName());
+        existingProduct.setDescription(product.getDescription());
+        existingProduct.setQuantity(product.getQuantity());
+        existingProduct.setDiscount(product.getDiscount());
+        existingProduct.setPrice(product.getPrice());
+        existingProduct.setSpecialPrice(product.getPrice() - ((product.getDiscount() * 0.01) * product.getPrice()));
+
+        Product savedProduct = productRepository.save(existingProduct);
+        return modelMapper.map(savedProduct, ProductDTO.class);
     }
 
 }
