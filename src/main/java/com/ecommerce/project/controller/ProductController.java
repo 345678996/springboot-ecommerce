@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.ecommerce.project.model.Product;
 import com.ecommerce.project.payload.ProductDTO;
 import com.ecommerce.project.payload.ProductResponse;
 import com.ecommerce.project.service.ProductService;
@@ -58,5 +59,12 @@ public class ProductController {
     public ResponseEntity<ProductDTO> deleteProduct(@PathVariable Long productId) {
         ProductDTO deletedProductDTO = productService.deleteProduct(productId);
         return new ResponseEntity<>(deletedProductDTO, HttpStatus.OK);
+    }
+
+    @PutMapping("/api/products/{productId}/image")
+    public ResponseEntity<ProductDTO> updateProductImage(@PathVariable Long productId,
+                                                         @RequestParam(name = "image") MultipartFile image) throws Exception {
+        ProductDTO updatedProduct = productService.updateProductImage(productId, image);
+        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }
 }
