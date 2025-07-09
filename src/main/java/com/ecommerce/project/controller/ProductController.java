@@ -17,13 +17,15 @@ import com.ecommerce.project.payload.ProductDTO;
 import com.ecommerce.project.payload.ProductResponse;
 import com.ecommerce.project.service.ProductService;
 
+import jakarta.validation.Valid;
+
 @RestController
 public class ProductController {
     @Autowired
     private ProductService productService;
 
     @PostMapping("/api/admin/categories/{categoryId}/product")
-    public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO,
+    public ResponseEntity<ProductDTO> addProduct(@Valid @RequestBody ProductDTO productDTO,
                                                  @PathVariable Long categoryId) {
         ProductDTO savedproductDTO = productService.addProduct(productDTO, categoryId);
         return new ResponseEntity<>(savedproductDTO, HttpStatus.CREATED);
@@ -48,7 +50,7 @@ public class ProductController {
     }
 
     @PutMapping("/api/products/{productId}")
-    public ResponseEntity<ProductDTO> updateProduct(@RequestBody ProductDTO productDTO,
+    public ResponseEntity<ProductDTO> updateProduct(@Valid @RequestBody ProductDTO productDTO,
                                                     @PathVariable Long productId) {
         ProductDTO updatedProductDTO = productService.updateProduct(productDTO, productId);                                                
 
