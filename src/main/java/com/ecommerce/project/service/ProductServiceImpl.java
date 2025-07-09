@@ -17,7 +17,6 @@ import com.ecommerce.project.payload.ProductResponse;
 import com.ecommerce.project.repositories.CategoryRepository;
 import com.ecommerce.project.repositories.ProductRepository;
 
-import jakarta.validation.Valid;
 
 @Service
 public class ProductServiceImpl implements ProductService {
