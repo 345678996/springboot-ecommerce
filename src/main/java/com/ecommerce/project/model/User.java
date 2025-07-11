@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
@@ -54,6 +55,7 @@ public class User {
 
     @NotBlank
     @Size(max = 120, message = "password can max be of 120 characters")
+    @Column(name = "password")
     private String password;
 
     public User(@NotBlank @Size(max = 20, message = "username can max be of 20 characters") String userName,
@@ -71,6 +73,9 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private Set<Product> products = new HashSet<>();
 }
 
 
